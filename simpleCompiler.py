@@ -11,8 +11,8 @@ class demo(QWidget):
         self.initUI()
     def initUI(self):
         # 按钮
-        sourcecode = QLabel('<h2 style="color:red;">待分析源码:</font></h2>')
-        resultshow = QLabel('<h2 style="color:green;">分析结果:</font></h2>')
+        sourcecode = QLabel('<h2 style="color:orange;">待分析源码:</font></h2>')
+        resultshow = QLabel('<h2 style="color:grey;">分析结果:</font></h2>')
 
         openfile = QPushButton( '打开文件', self)
         openfile.resize(openfile.sizeHint())
