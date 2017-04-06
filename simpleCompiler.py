@@ -32,9 +32,12 @@ class demo(QWidget):
         final = QPushButton('最终结果', self)
         final.resize(final.sizeHint())
 
+        # 输入输出框
         self.codeEdit = QTextEdit(self)
         self.resultEdit = QTextEdit(self)
         self.resultEdit.setReadOnly(True)
+
+        # 布局
         grid = QGridLayout()
         grid.setSpacing(10)
         grid.addWidget(sourcecode, 0, 0)
@@ -47,12 +50,15 @@ class demo(QWidget):
         grid.addWidget(semantic, 2, 3)
         grid.addWidget(intermediate, 2, 4)
         grid.addWidget(final, 2, 5)
+
+        # 信号发送
         openfile.clicked.connect(self.buttonClicked)
         lexical.clicked.connect(self.buttonClicked)
         grammar.clicked.connect(self.buttonClicked)
         semantic.clicked.connect(self.buttonClicked)
         intermediate.clicked.connect(self.buttonClicked)
         final.clicked.connect(self.buttonClicked)
+
         self.resize( 809, 500)
         self.setLayout(grid)
         self.show()
