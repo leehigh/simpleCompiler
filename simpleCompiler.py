@@ -1,5 +1,10 @@
 #!/usr/bin/python3
 # -*- coding: utf-8 -*-
+
+'a simple compiler'
+
+__author__ = 'Leehigh'
+
 import sys
 from PyQt5.QtWidgets import ( QLabel, QApplication, QWidget, QPushButton, QTextEdit, QGridLayout, QFileDialog)
 from features import ( lex, grammar, semantic, intermediate, final)

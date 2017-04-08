@@ -3,6 +3,8 @@
 
 '词法分析'
 
+__author__ = 'Leehigh'
+
 def lex(code):
-    
+
     return (code)
