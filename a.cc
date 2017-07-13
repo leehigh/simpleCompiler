@@ -24,7 +24,7 @@ int demo(int a)
 	a=a+2;
 	return a*2;
 }
-void main()
+void main(void)
 {
 	int a;
 	int b;
@@ -32,7 +32,7 @@ void main()
 	a=3;
 	b=4;
 	c=2;
-	a=program(a,b,demo(c))
+	a=program(a,b,demo(c));
 	return;
 }
 #

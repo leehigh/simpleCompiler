@@ -6,8 +6,8 @@
 __author__ = 'Leehigh'
 
 import sys
-from PyQt5.QtWidgets import ( QLabel, QApplication, QWidget, QPushButton, QTextEdit, QGridLayout, QFileDialog)
-from features import ( lex, grammar, semantic, intermediate, final)
+from PyQt5.QtWidgets import (QLabel, QApplication, QWidget, QPushButton, QTextEdit, QGridLayout, QFileDialog)
+from features import (lex, grammar, intermediate)
 # The script engine has some components, include symbol table, lexical analyzer, parser, semantic checker, intermediate code generator, optimizer, code generator, virtual machine
 
 class demo(QWidget):
@@ -28,14 +28,14 @@ class demo(QWidget):
         grammar = QPushButton( '语法分析', self)
         grammar.resize(grammar.sizeHint())
 
-        semantic = QPushButton('语义分析', self)
-        semantic.resize(semantic.sizeHint())
+        # semantic = QPushButton('语义分析', self)
+        # semantic.resize(semantic.sizeHint())
 
         intermediate = QPushButton('中间代码', self)
         intermediate.resize(intermediate.sizeHint())
 
-        final = QPushButton('最终结果', self)
-        final.resize(final.sizeHint())
+        # final = QPushButton('最终结果', self)
+        # final.resize(final.sizeHint())
 
         # 输入输出框
         self.codeEdit = QTextEdit(self)
@@ -46,39 +46,36 @@ class demo(QWidget):
         grid = QGridLayout()
         grid.setSpacing(10)
         grid.addWidget(sourcecode, 0, 0)
-        grid.addWidget(resultshow, 0, 3)
-        grid.addWidget(self.codeEdit, 1, 0, 1, 3)
-        grid.addWidget(self.resultEdit, 1, 3, 1, 3)
+        grid.addWidget(resultshow, 0, 2)
+        grid.addWidget(self.codeEdit, 1, 0, 1, 2)
+        grid.addWidget(self.resultEdit, 1, 2, 1, 2)
         grid.addWidget(openfile, 2, 0)
         grid.addWidget(lexical, 2, 1)
         grid.addWidget(grammar, 2, 2)
-        grid.addWidget(semantic, 2, 3)
-        grid.addWidget(intermediate, 2, 4)
-        grid.addWidget(final, 2, 5)
+        grid.addWidget(intermediate, 2, 3)
 
         # 信号发送
         openfile.clicked.connect(self.buttonClicked)
         lexical.clicked.connect(self.buttonClicked)
         grammar.clicked.connect(self.buttonClicked)
-        semantic.clicked.connect(self.buttonClicked)
+        # semantic.clicked.connect(self.buttonClicked)
         intermediate.clicked.connect(self.buttonClicked)
-        final.clicked.connect(self.buttonClicked)
+        # final.clicked.connect(self.buttonClicked)
 
         self.resize( 809, 500)
         self.setLayout(grid)
         self.show()
-        self.setWindowTitle('厉害的编译器')
+        self.setWindowTitle('编译器')
 
     def buttonClicked(self):
         sender = self.sender()
         a = self.codeEdit.toPlainText()
 
-        lexText = lex.lex(a)
-        grammarText = grammar.grammar(a)
-        semanticText = semantic.semantic(a)
+        lexText, word_list, dic = lex.lex(a)
+        grammarText = grammar.grammar(word_list, dic)
+        # semanticText = semantic.semantic(a)
         intermediateText = intermediate.intermediate(a)
-        finalText = final.final(a)
-
+        # finalText = final.final(a)
         if sender.text() == '打开文件':
             fname = QFileDialog.getOpenFileName(self, 'open file', '.')
             if fname[0]:
@@ -90,14 +87,14 @@ class demo(QWidget):
             self.resultEdit.setText(lexText)
         elif sender.text() == '语法分析':
             self.resultEdit.setText(grammarText)
-        elif sender.text() == '语义分析':
-            self.resultEdit.setText(semanticText)
+        # elif sender.text() == '语义分析':
+        #     self.resultEdit.setText(semanticText)
         elif sender.text() == '中间代码':
             self.resultEdit.setText(intermediateText)
-        elif sender.text() == '最终结果':
-            self.resultEdit.setText(finalText)
+        # elif sender.text() == '最终结果':
+        #     self.resultEdit.setText(finalText)
 
-# if __name__ == '__main__':
-app = QApplication(sys.argv)
-demo = demo()
-sys.exit(app.exec_())
+if __name__ == '__main__':
+    app = QApplication(sys.argv)
+    demo = demo()
+    sys.exit(app.exec_())

@@ -14,8 +14,11 @@ def lex(code):
     result = ''
     buff = ''
     flag = 0
+    word_list = []
+    word_list.clear()
     for i in range( len(code)):
         if ( code[i] == '#'):
+            word_list.append('#')
             break
         if ( len(buff) == 0):
             buff = buff + code[i]
@@ -49,20 +52,22 @@ def lex(code):
             if ( buff.isdigit() == False):
                 # 判断缓冲区字符串第一个字符是否为数字 是则出错
                 if ( buff[0] >= '0' and buff[0] <= '9'):
-                        pass
+                    return buff + ' ' + 'error', [], {}
                 # 不是则为保留字或标识符
                 else:
                     if ( buff not in dic):
                         dic_num = dic_num + 1
                         dic[ buff] = dic_num
                     result = result + '<  %s  ,  %d  > \n' % ( buff.center( 20 - len(buff), ' '), dic[buff])
-                    
+                    word_list.append(buff)
+
             # 是数字
             else:
                 result = result + '<  %s  ,  %d  > \n' % ( buff.center( 20 - len(buff), ' '), 0)
+                word_list.append(buff)
 
             buff = ''
 
         buff = buff + code[i]
 
-    return (result)
+    return result, word_list, dic
