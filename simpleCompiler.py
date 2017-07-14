@@ -7,7 +7,7 @@ __author__ = 'Leehigh'
 
 import sys
 from PyQt5.QtWidgets import (QLabel, QApplication, QWidget, QPushButton, QTextEdit, QGridLayout, QFileDialog)
-from features import (lex, grammar, intermediate)
+from features import (lex, grammar)
 # The script engine has some components, include symbol table, lexical analyzer, parser, semantic checker, intermediate code generator, optimizer, code generator, virtual machine
 
 class demo(QWidget):
@@ -72,9 +72,9 @@ class demo(QWidget):
         a = self.codeEdit.toPlainText()
 
         lexText, word_list, dic = lex.lex(a)
-        grammarText = grammar.grammar(word_list, dic)
+        grammarText, intermediateText = grammar.grammar(word_list, dic)
         # semanticText = semantic.semantic(a)
-        intermediateText = intermediate.intermediate(a)
+        # intermediateText = intermediate.intermediate(a)
         # finalText = final.final(a)
         if sender.text() == '打开文件':
             fname = QFileDialog.getOpenFileName(self, 'open file', '.')
