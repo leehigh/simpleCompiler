@@ -1,11 +1,18 @@
 #!/usr/bin/python3
 # -*- coding: utf-8 -*-
-register_id = 0
-instruction_address = 100
-tree_list = []
-inter_re = ''
-fi = open('inter', 'w')
 
+# register_id start form 0
+register_id = 0
+# instruction_address start from 100
+instruction_address = 100
+# this list is used to build a tree.
+# Every node in the tree is saved here.
+# The index of the node is used as address, like pointers in c++.
+tree_list = []
+# a result str
+inter_re = ''
+
+# judge if the str is a Symble(标识符)
 def isSymble(str, node):
     dic_tmp = node.get_dic()
     if str not in dic_tmp:
@@ -13,20 +20,25 @@ def isSymble(str, node):
     else:
         if dic_tmp[str] >= 18:
             return True
+# print error
 def errorProcess(word_list, should_be):
     # # # print('wrong: ' + should_be + ' but ' + word_list[0])
     # # print(word_list)
     global inter_re
     inter_re = inter_re + ('wrong: ' + should_be + ' but ' + word_list[0] + '\n')
     return
+#  define the node in a tree
 class Node:
     def __init__(self, name, father_id = 0):
         self.__name = name
+        # the index in tree_list
         self.__id = len(tree_list)
+        # the father's index in list
         self.__father_id = father_id
         child_list = []
         child_list.clear()
         self.__child_list = child_list
+        # the dic storage all the word in source code
         self.___dic = {}
         tree_list.append(self)
 
@@ -45,11 +57,15 @@ class Node:
         self.__dic = dic
     def set_father(self, father_id):
         self.__father_id = father_id
-
+    # three steps to addChild:
+    #   1. add child node to child list
+    #   2. set child node's father
+    #   3. pass dictionary to child node
     def addChild(self, child_node):
         self.__child_list.append(child_node.get_id())
         child_node.set_father(self.__id)
         child_node.set_dic(self.__dic)
+    # ugly tree
     def showTree(self):
         tree_result = ''
         tree_result = self.__name
@@ -58,7 +74,7 @@ class Node:
         for child_node in self.__child_list:
             tree_result = tree_result + ' - ' + tree_list[child_node].showTree()
         return tree_result
-
+# the begin node
 def p(node, word_list):
     if len(word_list) == 0:
         return
@@ -69,7 +85,7 @@ def p(node, word_list):
     else:
         errorProcess(word_list, 'int void')
         return
-def e1(node, word_list):
+def e1(node, word_list): 
     if word_list[0] == 'int' or word_list[0] == 'void':
         child_node_1 = Node('声明')
         node.addChild(child_node_1)
